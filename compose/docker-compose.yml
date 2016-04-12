@@ -1,0 +1,30 @@
+weba:
+    build: ./bookstaff-backend
+    expose:
+        - 8080
+
+webb:
+    build: ./bookstaff-backend
+    expose:
+        - 8080
+
+webc:
+    build: ./bookstaff-backend
+    expose:
+        - 8080
+
+haproxy:
+    image: haproxy:1.5
+    volumes:
+        - ./haproxy:/haproxy-override
+        - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    links:
+        - weba
+        - webb
+        - webc
+    ports:
+        - "80:80"
+        - "70:70"
+    expose:
+        - "80"
+        - "70"
